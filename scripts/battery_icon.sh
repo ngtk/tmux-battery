@@ -24,12 +24,16 @@ charged_default() {
 	fi
 }
 
+discharging_default() {
+  echo "$(spark 0 30 100 | awk '{print substr($0,4,3)}')"
+}
+
 # icons are set as script global variables
 get_icon_settings() {
 	charged_icon=$(get_tmux_option "@batt_charged_icon" "$(charged_default)")
 	charging_icon=$(get_tmux_option "@batt_charging_icon" "$charging_default")
 	attached_icon=$(get_tmux_option "@batt_attached_icon" "$attached_default")
-	discharging_icon=$(get_tmux_option "@batt_discharging_icon" "$discharging_default")
+  discharging_icon=$(get_tmux_option "@batt_discharging_icon" "$(discharging_default)")
 }
 
 battery_status() {
